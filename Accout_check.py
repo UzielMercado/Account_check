@@ -19,7 +19,7 @@ with open ('Balance.txt', 'rt') as Balance_file:
 	for amount in Balance_file:
 		Base_Origin_balance = amount
 Base_Origin_balance_S = Base_Origin_balance.rstrip()
-Origin_balance = float(Base_Origin_balance_S)
+Origin_balance = round(float(Base_Origin_balance_S) * 100)
 
 while True:
 
@@ -35,7 +35,7 @@ while True:
 		for Amount in Balance_file:
 			Base_Current_balance = Amount
 	Base_Current_balance_S = Base_Current_balance.rstrip()
-	Current_balance = float(Base_Current_balance_S)
+	Current_balance = round(float(Base_Current_balance_S) * 100)
 
 	if Current_balance != Origin_balance:
 		Balance_change = abs(Current_balance - Origin_balance)
@@ -47,15 +47,15 @@ while True:
 		New_accounts2 = New_accounts1.split('\n')
 		New_accounts3 = New_accounts2[0].split(' ')
 
-		Approved +=float(New_accounts3[1])
+		Approved += round(float(New_accounts3[1]) * 100)
 		Account = New_accounts3[0]
 		if Approved < 0:
-			signals = "----------------------------------------------\nCash out of:" + str(abs(Approved)) + " From: " + str(Account) + "\n----------------------------------------------\n"
+			signals = "----------------------------------------------\nCash out of:" + str(abs(Approved/100)) + " From: " + str(Account) + "\n----------------------------------------------\n"
 			print(signals)
 			signals_file = open('Signals.txt', 'a')
 			signals_file.write(signals)
 		else:
-			signals = "----------------------------------------------\nSent: " + str(Approved) + " To: " + str(Account) + "\n----------------------------------------------\n"
+			signals = "----------------------------------------------\nSent: " + str(Approved/100) + " To: " + str(Account) + "\n----------------------------------------------\n"
 			print(signals)
 			signals_file = open('Signals.txt', 'a')
 			signals_file.write(signals)
@@ -70,6 +70,10 @@ while True:
 		print("\nNon Approved:")
 		Non_Approved -= abs(Approved)
 		print(Non_Approved)
+	elif Non_Approved == 0:
+		Non_Approved = 0
+		print("\nNon Approved:")
+		print(Non_Approved)
 	else:
 		print("\nNon Approved:")
 		print(Non_Approved)
@@ -79,9 +83,11 @@ while True:
 		print(Approved)
 		Approved_origin += 1
 		Approved_list.clear()
-	else:
+		Approved -= Approved
+	elif Approved == 0:
+		Approved = 0
 		print("\nApproved:")
-		print(0)
+		print(Approved)
 		Approved_list.clear()
 
 	print("\n----------------------------------------------\n")

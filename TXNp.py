@@ -59,9 +59,9 @@ while True:
 
 		print("New account.\n")
 
-		list_element = TXNsPendientes(int(TXN_convertion_list[0]), float(int_TXN_list[2]), randint(5, 15))
+		list_element = TXNsPendientes(int(TXN_convertion_list[0]), float(int_TXN_list[2]), randint(15, 280))
 		TXNsPendiente.append(list_element)
-		timer = randint(5, 15)
+		timer = randint(30, 300)
 
 	for account in TXNsPendiente:
 		account.z = account.z - 1
